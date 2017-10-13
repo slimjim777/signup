@@ -5,6 +5,7 @@ package service
 import (
 	"github.com/gorilla/mux"
 	"net/http"
+	"strings"
 )
 
 // Router creates a Gorilla mux router
@@ -14,6 +15,11 @@ func Router() *mux.Router {
 
 	// API routes
 	router.Handle("/api/version", Middleware(http.HandlerFunc(VersionHandler))).Methods("GET")
+
+	path := []string{".", "/static/"}
+	fs := http.StripPrefix("/static/", http.FileServer(http.Dir(strings.Join(path, ""))))
+	router.PathPrefix("/static/").Handler(fs)
+	router.Handle("/", http.HandlerFunc(IndexHandler)).Methods("GET")
 
 	return router
 }
