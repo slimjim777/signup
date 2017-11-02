@@ -55,6 +55,16 @@ func CreateDatabase() error {
 }
 
 // BookingUpsert upserts a booking for a date
-func BookingUpsert(name, date string, playing bool) {
+func BookingUpsert(name, date string, playing bool) error {
 
+	p := 't'
+	if !playing {
+		p = 'f'
+	}
+
+	if _, err := db.Exec(upsertBooking, date, name, p); err != nil {
+        return err
+	}
+
+	return nil
 }
