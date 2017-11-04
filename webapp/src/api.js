@@ -8,6 +8,10 @@ var service = {
         return axios.put(API_VERSION + 'booking', data);
     },
 
+    bookingList: function (data,cancelCallback) {
+        return axios.get(API_VERSION + 'booking/' + data);
+    },
+
     version: function (query, cancelCallback) {
         return axios.get(API_VERSION + 'version');
     }

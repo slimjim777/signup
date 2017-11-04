@@ -9,6 +9,7 @@ import (
 	"strings"
 	"text/template"
 
+	"github.com/gorilla/mux"
 	"github.com/slimjim777/football/datastore"
 )
 
@@ -31,6 +32,12 @@ type BookingRequest struct {
 type StandardResponse struct {
 	Success bool   `json:"success"`
 	Message string `json:"message"`
+}
+
+// BookingResponse is the JSON response from the API for the booking list
+type BookingResponse struct {
+	StandardResponse
+	Bookings []datastore.Booking `json:"bookings"`
 }
 
 var indexTemplate = "/static/app.html"
@@ -75,7 +82,7 @@ func BookingHandler(w http.ResponseWriter, r *http.Request) {
 	err := json.NewDecoder(r.Body).Decode(&booking)
 	if err != nil {
 		log.Printf("Error in decoding JSON booking: %v\n", err)
-		standardResponse(false, "Error in the request:"+err.Error(), w)
+		standardResponse(false, "Error in the request", w)
 		return
 	}
 
@@ -87,6 +94,28 @@ func BookingHandler(w http.ResponseWriter, r *http.Request) {
 	}
 
 	standardResponse(true, "", w)
+}
+
+// BookingListHandler fetches the bookings for a date
+func BookingListHandler(w http.ResponseWriter, r *http.Request) {
+	w.Header().Set("Content-Type", "application/json; charset=UTF-8")
+
+	vars := mux.Vars(r)
+
+	bookings, err := datastore.BookingList(vars["date"])
+	if err != nil {
+		log.Printf("Error in getting the bookings: %v\n", err)
+		standardResponse(false, "Error in getting the bookings", w)
+		return
+	}
+
+	std := StandardResponse{true, ""}
+	response := BookingResponse{std, bookings}
+
+	// Encode the response as JSON
+	if err := json.NewEncoder(w).Encode(response); err != nil {
+		log.Println("Error forming the booking response.")
+	}
 }
 
 func standardResponse(success bool, message string, w http.ResponseWriter) {

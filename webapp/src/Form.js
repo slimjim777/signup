@@ -15,7 +15,19 @@ class Form extends Component {
             name: '',
             message: null,
             monday: moment(d),
+            bookings: [],
         }
+
+        this.getBookings()
+    }
+
+    getBookings() {
+        api.bookingList(this.state.monday.format('YYYY-MM-DD')).then(response => {
+            console.log(response.data);
+            if (response.data.success) {
+                this.setState({bookings: response.data.bookings})
+            }
+        })
     }
 
     validate() {
@@ -27,6 +39,12 @@ class Form extends Component {
             this.setState({message: null})
             return true
         }
+    }
+
+    arePlaying() {
+        return this.state.bookings.filter(b => {
+            return b.playing;
+        })
     }
 
     handleChangeName = (e) => {
@@ -46,6 +64,7 @@ class Form extends Component {
         }
         api.bookingUpsert(b).then(response => {
             console.log(response.data);
+            this.getBookings()
         })
     }
 
@@ -63,6 +82,7 @@ class Form extends Component {
         }
         api.bookingUpsert(b).then(response => {
             console.log(response.data);
+            this.getBookings()
         })
     }
 
@@ -74,6 +94,22 @@ class Form extends Component {
                 </div>
             )
         }
+    }
+
+    renderBookings() {
+        var booked = this.arePlaying()
+    
+        return (
+            <table>
+                {booked.map(b => {
+                    return (
+                        <tr key={b.id}>
+                            <td>{b.name}</td>
+                        </tr>
+                    )
+                })}
+            </table>
+        )
     }
 
     render () {
@@ -100,6 +136,12 @@ class Form extends Component {
                     <a href="" onClick={this.handleYesClick} className="brand">Playing</a>
                 </div>
 
+                <div className="box">
+                    <h3>Playing: {this.arePlaying().length}</h3>
+                    <div className="row">
+                        {this.renderBookings()}
+                    </div>
+                </div>
             </div>
         )
     }
