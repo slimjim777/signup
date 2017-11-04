@@ -4,17 +4,22 @@ package datastore
 
 import (
 	"database/sql"
-	"os"
 	"log"
+	"os"
 
 	// PostgreSQL adapter
 	_ "github.com/lib/pq"
 )
 
-var db *sql.DB
+// DB local database interface with our custom methods.
+type DB struct {
+	*sql.DB
+}
+
+var dbConnection *DB
 
 // Version holds the version of the service
-const Version = "0.1" 
+const Version = "0.1"
 
 const (
 	createBooking = `CREATE TABLE IF NOT EXISTS booking (
@@ -29,7 +34,7 @@ const (
 
 	upsertBooking = `
 		INSERT INTO booking (book_date, name, playing)
-    	VALUES ($1, $2, $3)
+		VALUES ($1, $2, $3)
 		ON CONFLICT (book_date, name)
 			DO UPDATE SET playing = $3 WHERE booking.book_date=$1 AND booking.name=$2
 	`
@@ -38,32 +43,29 @@ const (
 // CreateDatabase creates the database tables
 func CreateDatabase() error {
 
-    db, err := sql.Open("postgres", os.Getenv("DATABASE_URL"))
+	db, err := sql.Open("postgres", os.Getenv("DATABASE_URL"))
 	if err != nil {
 		log.Fatalf("Error opening database: %q", err)
 	}
-	
-    if _, err := db.Exec(createBooking); err != nil {
-        return nil
+
+	dbConnection = &DB{db}
+
+	if _, err := dbConnection.Exec(createBooking); err != nil {
+		return nil
 	}
 
-    if _, err := db.Exec(createBookingIndex); err != nil {
-        return nil
+	if _, err := dbConnection.Exec(createBookingIndex); err != nil {
+		return nil
 	}
-	
+
 	return nil
 }
 
 // BookingUpsert upserts a booking for a date
 func BookingUpsert(name, date string, playing bool) error {
 
-	p := 't'
-	if !playing {
-		p = 'f'
-	}
-
-	if _, err := db.Exec(upsertBooking, date, name, p); err != nil {
-        return err
+	if _, err := dbConnection.Exec(upsertBooking, date, name, playing); err != nil {
+		return err
 	}
 
 	return nil

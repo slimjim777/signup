@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import moment from 'moment';
+import api from './api'
 
 class Form extends Component {
 
@@ -13,7 +14,7 @@ class Form extends Component {
         this.state = {
             name: '',
             message: null,
-            monday: moment(d).format('DD/MM/YYYY'),
+            monday: moment(d),
         }
     }
 
@@ -38,6 +39,14 @@ class Form extends Component {
             return
         }
         console.log("Yes")
+        var b = {
+            name: this.state.name,
+            date: this.state.monday.format('YYYY-MM-DD'),
+            playing: true
+        }
+        api.bookingUpsert(b).then(response => {
+            console.log(response.data);
+        })
     }
 
     handleNoClick = (e) => {
@@ -47,6 +56,14 @@ class Form extends Component {
             return
         }
         console.log("No")
+        var b = {
+            name: this.state.name,
+            date: this.state.monday.format('YYYY-MM-DD'),
+            playing: false
+        }
+        api.bookingUpsert(b).then(response => {
+            console.log(response.data);
+        })
     }
 
     renderAlert() {
@@ -68,7 +85,7 @@ class Form extends Component {
                     <fieldset>
                         <label htmlFor="monday">Kick-off Date:
                             <input type="text" placeholder="name of player" disabled
-                                    value={this.state.monday} />
+                                    value={this.state.monday.format('DD/MM/YYYY')} />
                         </label>
                         <label htmlFor="name">Name:
                             <input type="text" placeholder="name of player"

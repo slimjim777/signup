@@ -3,10 +3,11 @@
 package main
 
 import (
-	"github.com/slimjim777/football/datastore"
-	"net/http"
 	"log"
+	"net/http"
 	"os"
+
+	"github.com/slimjim777/football/datastore"
 	"github.com/slimjim777/football/service"
 )
 
@@ -23,6 +24,7 @@ func main() {
 		log.Fatal(err)
 	}
 
-	router:=service.Router()
-	log.Fatal(http.ListenAndServe(":" + port, router))
+	log.Println("Starting application on port", port)
+	router := service.Router()
+	log.Fatal(http.ListenAndServe(":"+port, router))
 }

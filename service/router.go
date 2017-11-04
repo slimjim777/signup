@@ -15,6 +15,7 @@ func Router() *mux.Router {
 
 	// API routes
 	router.Handle("/api/version", Middleware(http.HandlerFunc(VersionHandler))).Methods("GET")
+	router.Handle("/api/booking", Middleware(http.HandlerFunc(BookingHandler))).Methods("PUT")
 
 	path := []string{".", "/static/"}
 	fs := http.StripPrefix("/static/", http.FileServer(http.Dir(strings.Join(path, ""))))
