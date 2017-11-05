@@ -12,7 +12,7 @@ class Form extends Component {
         d.setDate(d.getDate() + (1 + 7 - d.getDay()) % 7);
 
         this.state = {
-            name: '',
+            name: localStorage.getItem('name') || '',
             message: null,
             monday: moment(d),
             bookings: [],
@@ -49,6 +49,9 @@ class Form extends Component {
 
     handleChangeName = (e) => {
         this.setState({name: e.target.value, message: null});
+        if (e.target.value !== '') {
+            localStorage.setItem('name', e.target.value)
+        }
     }
 
     handleYesClick = (e) => {
@@ -120,23 +123,25 @@ class Form extends Component {
                 <form>
                     <fieldset>
                         <label htmlFor="monday">Kick-off Date:
+                            <b>
                             <input type="text" placeholder="name of player" disabled
                                     value={this.state.monday.format('DD/MM/YYYY')} />
+                            </b>
                         </label>
                         <label htmlFor="name">Name:
                             <input type="text" placeholder="name of player"
                                     value={this.state.name} onChange={this.handleChangeName} />
                         </label>
+
+                        <div className="clear">
+                            <a href="" onClick={this.handleYesClick} className="brand">Playing</a>
+                            &nbsp;
+                            <button onClick={this.handleNoClick}>Not Playing</button>
+                        </div>
                     </fieldset>
                 </form>
 
-                <div className="clear">
-                    <button onClick={this.handleNoClick}>Not Playing</button>
-                    &nbsp;
-                    <a href="" onClick={this.handleYesClick} className="brand">Playing</a>
-                </div>
-
-                <div className="box">
+                <div className="box clear">
                     <h3>Playing: {this.arePlaying().length}</h3>
                     <div className="row">
                         {this.renderBookings()}
