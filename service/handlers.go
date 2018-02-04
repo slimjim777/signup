@@ -8,13 +8,17 @@ import (
 	"net/http"
 	"strings"
 	"text/template"
+	"time"
 
 	"github.com/gorilla/mux"
 	"github.com/slimjim777/football/datastore"
 )
 
 // Page is the page details for the web application
-type Page struct{}
+type Page struct {
+	Date     string
+	Bookings []datastore.Booking
+}
 
 // VersionResponse is the JSON response from the API Version method
 type VersionResponse struct {
@@ -41,6 +45,7 @@ type BookingResponse struct {
 }
 
 var indexTemplate = "/static/app.html"
+var staticTemplate = "/static/static.html"
 
 // VersionHandler is the API method to return the version of the service
 func VersionHandler(w http.ResponseWriter, r *http.Request) {
@@ -70,6 +75,58 @@ func IndexHandler(w http.ResponseWriter, r *http.Request) {
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 	}
+}
+
+// StaticHandler is the front page of the static web page
+func StaticHandler(w http.ResponseWriter, r *http.Request) {
+	page := Page{}
+
+	path := []string{".", staticTemplate}
+	t, err := template.ParseFiles(strings.Join(path, ""))
+	if err != nil {
+		log.Printf("Error loading the application template: %v\n", err)
+		http.Error(w, err.Error(), http.StatusInternalServerError)
+		return
+	}
+
+	// Get the bookings for next Monday
+	d := getDate()
+	page.Date = d.Format("Mon 2 Jan 2006")
+	bookings, err := datastore.BookingList(d.Format(time.RFC3339)[:10])
+	if err != nil {
+		log.Println("Error fetching bookings:", bookings)
+		http.Error(w, err.Error(), http.StatusInternalServerError)
+	}
+	page.Bookings = []datastore.Booking{}
+	for _, b := range bookings {
+		if b.Playing {
+			page.Bookings = append(page.Bookings, b)
+		}
+	}
+
+	err = t.Execute(w, page)
+	if err != nil {
+		http.Error(w, err.Error(), http.StatusInternalServerError)
+	}
+}
+
+// StaticFormHandler is the POST-ed form
+func StaticFormHandler(w http.ResponseWriter, r *http.Request) {
+	r.ParseForm()
+
+	if len(r.FormValue("name")) == 0 {
+		http.Redirect(w, r, "/vintage", http.StatusFound)
+		return
+	}
+
+	d := getDate()
+
+	err := datastore.BookingUpsert(r.FormValue("name"), d.Format(time.RFC3339)[:10], r.FormValue("playing") == "playing")
+	if err != nil {
+		log.Printf("Error with booking: %v\n", err)
+	}
+
+	http.Redirect(w, r, "/vintage", http.StatusFound)
 }
 
 // BookingHandler creates or updates a booking for an individual
@@ -128,4 +185,12 @@ func standardResponse(success bool, message string, w http.ResponseWriter) {
 	if err := json.NewEncoder(w).Encode(response); err != nil {
 		log.Println("Error forming the standard response.")
 	}
+}
+
+func getDate() time.Time {
+	t := time.Now()
+
+	day := (1 + 7 - int(t.Weekday())) % 7
+
+	return t.Add(time.Duration(day*24) * time.Hour)
 }

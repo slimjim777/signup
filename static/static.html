@@ -1,0 +1,57 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="theme-color" content="#000000">
+
+    <title>Monday Night Football</title>
+    <link rel="stylesheet" href="/static/css/application.css" />
+  </head>
+  <body>
+
+    <div class="App">
+        <header class="App-header">
+            <img src="/static/images/football.png" class="App-logo" alt="logo" />
+            <h1 class="App-title">Monday Night Football</h1>
+        </header>
+
+        <div class="row">
+            <form action="/vintageform" method="post">
+                <fieldset>
+                    <label for="monday">Kick-off Date:
+                        <b>
+                        <input type="text" placeholder="name of player" disabled
+                                value="{{.Date}}" name="monday"  />
+                        </b>
+                    </label>
+                    <label for="name">Name:
+                        <input name="name" type="text" placeholder="name of player" />
+                    </label>
+
+                    <div class="clear">
+                        <button name="playing" class="brand" value="playing">Playing</button>
+                        &nbsp;
+                        <button name="playing" value="notplaying">Not Playing</button>
+                    </div>
+                </fieldset>
+            </form>
+
+    
+
+            <div class="box clear">
+                <h3>Playing: {{len .Bookings}}</h3>
+                <div class="row">
+                    <table>
+                        {{range .Bookings}}
+                            <tr>
+                                <td>{{println .Name}}</td>
+                            </tr>
+                        {{end}}
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+  </body>
+</html>

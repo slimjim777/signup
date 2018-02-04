@@ -23,6 +23,8 @@ func Router() *mux.Router {
 	fs := http.StripPrefix("/static/", http.FileServer(http.Dir(strings.Join(path, ""))))
 	router.PathPrefix("/static/").Handler(fs)
 	router.Handle("/", http.HandlerFunc(IndexHandler)).Methods("GET")
+	router.Handle("/vintage", http.HandlerFunc(StaticHandler)).Methods("GET")
+	router.Handle("/vintageform", http.HandlerFunc(StaticFormHandler)).Methods("POST")
 
 	return router
 }
