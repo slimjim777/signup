@@ -9,7 +9,7 @@ class Form extends Component {
         super(props)
 
         var d = new Date();
-        d.setDate(d.getDate() + (1 + 7 - d.getDay()) % 7);
+        d.setDate(d.getDate() + (3 + 7 - d.getDay()) % 7);
 
         this.state = {
             name: localStorage.getItem('name') || '',

@@ -190,7 +190,7 @@ func standardResponse(success bool, message string, w http.ResponseWriter) {
 func getDate() time.Time {
 	t := time.Now()
 
-	day := (1 + 7 - int(t.Weekday())) % 7
+	day := (3 + 7 - int(t.Weekday())) % 7
 
 	return t.Add(time.Duration(day*24) * time.Hour)
 }
