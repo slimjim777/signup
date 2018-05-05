@@ -7,8 +7,8 @@ import (
 	"net/http"
 	"os"
 
-	"github.com/slimjim777/football/datastore"
-	"github.com/slimjim777/football/service"
+	"github.com/slimjim777/signup/datastore"
+	"github.com/slimjim777/signup/service"
 )
 
 func main() {

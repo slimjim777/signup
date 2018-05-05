@@ -11,7 +11,7 @@ import (
 	"time"
 
 	"github.com/gorilla/mux"
-	"github.com/slimjim777/football/datastore"
+	"github.com/slimjim777/signup/datastore"
 )
 
 // Page is the page details for the web application
