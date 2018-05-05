@@ -122,27 +122,27 @@ class Form extends Component {
                 {this.renderAlert()}
                 <form>
                     <fieldset>
-                        <label htmlFor="monday">Kick-off Date:
+                        <label htmlFor="monday">Date:
                             <b>
-                            <input type="text" placeholder="name of player" disabled
+                            <input type="text" disabled
                                     value={this.state.monday.format('DD/MM/YYYY')} />
                             </b>
                         </label>
                         <label htmlFor="name">Name:
-                            <input type="text" placeholder="name of player"
+                            <input type="text" placeholder="your name, anointed one"
                                     value={this.state.name} onChange={this.handleChangeName} />
                         </label>
 
                         <div className="clear">
-                            <a href="" onClick={this.handleYesClick} className="brand">Playing</a>
+                            <a href="" onClick={this.handleYesClick} className="brand">Attending</a>
                             &nbsp;
-                            <button onClick={this.handleNoClick}>Not Playing</button>
+                            <button onClick={this.handleNoClick}>Not Attending</button>
                         </div>
                     </fieldset>
                 </form>
 
                 <div className="box clear">
-                    <h3>Playing: {this.arePlaying().length}</h3>
+                    <h3>Signed Up: {this.arePlaying().length}</h3>
                     <div className="row">
                         {this.renderBookings()}
                     </div>

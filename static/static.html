@@ -5,34 +5,33 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="theme-color" content="#000000">
 
-    <title>Monday Night Football</title>
+    <title>Life Church Worship</title>
     <link rel="stylesheet" href="/static/css/application.css" />
   </head>
   <body>
 
     <div class="App">
         <header class="App-header">
-            <img src="/static/images/football.png" class="App-logo" alt="logo" />
-            <h1 class="App-title">Monday Night Football</h1>
+            <h1 class="App-title">Life Church Worship</h1>
         </header>
 
         <div class="row">
             <form action="/vintageform" method="post">
                 <fieldset>
-                    <label for="monday">Kick-off Date:
+                    <label for="monday">Date:
                         <b>
-                        <input type="text" placeholder="name of player" disabled
+                        <input type="text" disabled
                                 value="{{.Date}}" name="monday"  />
                         </b>
                     </label>
                     <label for="name">Name:
-                        <input name="name" type="text" placeholder="name of player" />
+                        <input name="name" type="text" placeholder="your name, anointed one" />
                     </label>
 
                     <div class="clear">
-                        <button name="playing" class="brand" value="playing">Playing</button>
+                        <button name="playing" class="brand" value="playing">Attending</button>
                         &nbsp;
-                        <button name="playing" value="notplaying">Not Playing</button>
+                        <button name="playing" value="notplaying">Not Attending</button>
                     </div>
                 </fieldset>
             </form>

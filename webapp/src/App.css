@@ -8,14 +8,15 @@
 }
 
 .App-header {
-  background-image: url('/static/images/grass.jpg');
+  background-image: url('/static/images/worship.jpg');
   height: 120px;
   padding: 20px;
   color: #eee;
 }
 
 .App-title {
-  font-size: 1.5em;
+  font-size: 4em;
+  color: #fff;
 }
 
 .App-intro {
