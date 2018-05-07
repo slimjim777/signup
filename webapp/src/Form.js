@@ -23,7 +23,6 @@ class Form extends Component {
 
     getBookings() {
         api.bookingList(this.state.monday.format('YYYY-MM-DD')).then(response => {
-            console.log(response.data);
             if (response.data.success) {
                 this.setState({bookings: response.data.bookings})
             }
@@ -59,14 +58,13 @@ class Form extends Component {
         if (!this.validate()) {
             return
         }
-        console.log("Yes")
+
         var b = {
             name: this.state.name,
             date: this.state.monday.format('YYYY-MM-DD'),
             playing: true
         }
         api.bookingUpsert(b).then(response => {
-            console.log(response.data);
             this.getBookings()
         })
     }
@@ -77,14 +75,13 @@ class Form extends Component {
         if (!this.validate()) {
             return
         }
-        console.log("No")
+
         var b = {
             name: this.state.name,
             date: this.state.monday.format('YYYY-MM-DD'),
             playing: false
         }
         api.bookingUpsert(b).then(response => {
-            console.log(response.data);
             this.getBookings()
         })
     }

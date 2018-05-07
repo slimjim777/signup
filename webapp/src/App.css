@@ -124,3 +124,26 @@ table td {
   padding: 0.5em;
   border-radius: 5px;
 }
+
+table.event {
+  border-collapse: collapse;
+}
+
+table.event td {
+  border: 1px solid #ccc;
+  padding: 0.5em;
+  border-radius: 0;
+}
+
+table.event td.small {
+  width: 120px;
+}
+
+button.event {
+  font-size: 14px;
+  background: #3498db;
+  color: #ffffff;
+  font-size: 14px;
+  padding: 5px 10px 5px 10px;
+  text-decoration: none;
+}
