@@ -1,0 +1,80 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="theme-color" content="#000000">
+
+    <title>{{.Title}}</title>
+    <link rel="stylesheet" href="/static/css/app.css" />
+  </head>
+  <body>
+
+    <div class="App">
+        <header class="App-header">
+            <img src="{{.Banner}}" />
+        </header>
+
+        <div class="row">
+            <h1 class="App-title">{{.Title}}</h1>
+            <form action="/form" method="post">
+                <fieldset>
+                    <label for="monday">Date:
+                        <b>
+                        <input type="text" placeholder="name of attendee" disabled
+                                value="{{.Date}}" name="monday"  />
+                        </b>
+                    </label>
+                    <label for="name">Name:
+                        <input id="name" name="name" type="text" placeholder="name of attendee" onchange="handleName()" />
+                    </label>
+
+                    <div class="clear">
+                        <button name="playing" class="brand" value="playing">{{.LabelPlus}}</button>
+                        &nbsp;
+                        <button name="playing" value="notplaying">{{.LabelMinus}}</button>
+                    </div>
+                </fieldset>
+            </form>
+
+    
+
+            <div class="box clear">
+                <h3>Total: {{len .Bookings}}</h3>
+                <div class="row">
+                    <table>
+                        {{range $i, $e := .Bookings}}
+                            {{if lt $i $.Limit}}
+                            <tr>
+                                <td>{{println $e.Name}}</td>
+                            </tr>
+                            {{end}}
+                        {{end}}
+                    </table>
+                </div>
+                <div class="row">
+                        <table>
+                            {{range $i, $e := .Bookings}}
+                                {{if ge $i $.Limit}}
+                                <tr>
+                                    <td class="reserve">{{println $e.Name}}</td>
+                                </tr>
+                                {{end}}
+                            {{end}}
+                        </table>
+                    </div>                
+            </div>
+        </div>
+    </div>
+
+    <script>
+        var name = localStorage.getItem('name') || '';
+        document.getElementById("name").value = name;
+
+        function handleName() {
+            localStorage.setItem("name", document.getElementById("name").value);
+        }
+    </script>
+
+  </body>
+</html>
