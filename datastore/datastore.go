@@ -28,8 +28,8 @@ const (
 		created timestamp DEFAULT NOW(),
 		book_date date not null,
 		name varchar(200) not null,
-		playing boolean
-		modified timestamp DEFAULT NOW(),
+		playing boolean,
+		modified timestamp DEFAULT NOW()
 	)`
 
 	createBookingIndex = `CREATE UNIQUE INDEX IF NOT EXISTS booking_idx ON booking (book_date DESC, name)`

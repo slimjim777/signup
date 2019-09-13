@@ -1,3 +1,6 @@
+github.com/gorilla/context v1.1.1 h1:AWwleXJkX/nhcU9bZSnZoi3h/qGYqQAGhq6zZe/aQW8=
 github.com/gorilla/context v1.1.1/go.mod h1:kBGZzfjB9CEq2AlWe17Uuf7NDRt0dE0s8S51q0aT7Yg=
+github.com/gorilla/mux v0.0.0-20171020034700-7625a85c14e6 h1:kxq5E7PNTn7LMKMHWokruMxieWpOfaSNNi3YOet7wDY=
 github.com/gorilla/mux v0.0.0-20171020034700-7625a85c14e6/go.mod h1:1lud6UwP+6orDFRuTfBEV8e9/aOM/c4fVVCaMa2zaAs=
+github.com/lib/pq v0.0.0-20171022192043-b609790bd85e h1:1qCfiDN0AcL0+q3Rooed70ztlReITlD4CBZKgmjKO20=
 github.com/lib/pq v0.0.0-20171022192043-b609790bd85e/go.mod h1:5WUZQaWbwv1U+lTReE5YruASi9Al49XbQIvNi/34Woo=
