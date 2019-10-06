@@ -53,16 +53,27 @@
                     </table>
                 </div>
                 <div class="row">
-                        <table>
-                            {{range $i, $e := .Bookings}}
-                                {{if ge $i $.Limit}}
-                                <tr>
-                                    <td class="reserve">{{println $e.Name}}</td>
-                                </tr>
-                                {{end}}
+                    <table>
+                        {{range $i, $e := .Bookings}}
+                            {{if ge $i $.Limit}}
+                            <tr>
+                                <td class="reserve">{{println $e.Name}}</td>
+                            </tr>
                             {{end}}
-                        </table>
-                    </div>                
+                        {{end}}
+                    </table>
+                </div>
+
+                <h3>Not Attending</h3>
+                <div class="row">
+                    <table>
+                        {{range $i, $e := .BookingsNot}}
+                            <tr>
+                                <td class="not_attending">{{println $e.Name}}</td>
+                            </tr>
+                        {{end}}
+                    </table>
+                </div>
             </div>
         </div>
     </div>

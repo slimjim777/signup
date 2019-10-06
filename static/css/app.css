@@ -118,3 +118,7 @@ table td{
 
 table td.reserve{background-color:#d3d3d3}
 
+table td.not_attending{
+    color: maroon;
+    background-color:#d3d3d3
+}

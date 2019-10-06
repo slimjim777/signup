@@ -15,13 +15,14 @@ import (
 
 // Page is the page details for the web application
 type Page struct {
-	Banner     string
-	Title      string
-	Date       string
-	LabelPlus  string
-	LabelMinus string
-	Bookings   []datastore.Booking
-	Limit      int
+	Banner      string
+	Title       string
+	Date        string
+	LabelPlus   string
+	LabelMinus  string
+	Bookings    []datastore.Booking
+	BookingsNot []datastore.Booking
+	Limit       int
 }
 
 // BookingRequest is the JSON request to create or update a booking
@@ -58,9 +59,12 @@ func StaticHandler(w http.ResponseWriter, r *http.Request) {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 	}
 	page.Bookings = []datastore.Booking{}
+	page.BookingsNot = []datastore.Booking{}
 	for _, b := range bookings {
 		if b.Playing {
 			page.Bookings = append(page.Bookings, b)
+		} else {
+			page.BookingsNot = append(page.BookingsNot, b)
 		}
 	}
 
