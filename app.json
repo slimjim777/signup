@@ -1,0 +1,58 @@
+{
+  "name": "Weekly Sign-up Form",
+  "description": "Simple sign-up form to separate the attendees from the non-attendees.",
+  "keywords": [
+    "productivity",
+    "attendees",
+    "volunteers",
+    "rota"
+  ],
+  "website": "https://github.com/slimjim777/signup",
+  "repository": "https://github.com/slimjim777/signup",
+  "success_url": "/",
+  "scripts": {},
+  "env": {
+    "PORT": {
+      "description": "The port the application listens on.",
+      "value": "8000"
+    },
+    "DAY": {
+      "description": "Day of the week for the rota (Sunday=0, Monday=1,...).",
+      "value": "3"
+    },
+    "TITLE": {
+      "description": "Title of the sign-up.",
+      "value": "Wednesday Night Sign-up"
+    },
+    "BANNER": {
+      "description": "base64-encoded banner image (height=120px).",
+      "value": ""
+    },
+    "LIMIT": {
+      "description": "Maximum number of attendees.",
+      "value": "20"
+    },
+    "LABELPLUS": {
+      "description": "Description for the list of attendees.",
+      "value": "Attending"
+    },
+    "LABELMINUS": {
+      "description": "Description for the list of non-attendees.",
+      "value": "Not attending"
+    }
+  },
+  "formation": {
+    "web": {
+      "quantity": 1,
+      "size": "Free"
+    }
+  },
+  "addons": [
+    {
+      "plan": "heroku-postgresql",
+      "options": {
+        "version": "11"
+      }
+    }
+  ]
+}
