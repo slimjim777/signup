@@ -26,7 +26,8 @@
     },
     "BANNER": {
       "description": "base64-encoded banner image (height=120px).",
-      "value": ""
+      "value": "",
+      "required": false
     },
     "LIMIT": {
       "description": "Maximum number of attendees.",
