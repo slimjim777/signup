@@ -16,6 +16,7 @@ import (
 // Page is the page details for the web application
 type Page struct {
 	Banner      string
+	Background  string
 	Title       string
 	Date        string
 	LabelPlus   string
@@ -38,7 +39,8 @@ var staticTemplate = "/static/static.html"
 func StaticHandler(w http.ResponseWriter, r *http.Request) {
 	settings := config.Get()
 	page := Page{
-		Limit: settings.Limit, Title: settings.Title, Banner: settings.Banner,
+		Limit: settings.Limit, Title: settings.Title,
+		Banner: settings.Banner, Background: settings.Background,
 		LabelPlus: settings.LabelPlus, LabelMinus: settings.LabelMinus,
 	}
 

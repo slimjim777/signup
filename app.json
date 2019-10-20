@@ -29,6 +29,10 @@
       "value": "",
       "required": false
     },
+    "BACKGROUND": {
+      "description": "background colour for the banner in CSS format e.g. #cccccc.",
+      "value": "#000000"
+    },
     "LIMIT": {
       "description": "Maximum number of attendees.",
       "value": "20"

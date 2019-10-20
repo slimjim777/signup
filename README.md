@@ -24,3 +24,5 @@ go run main.go
 ## Run it
 
 [![Deploy](https://www.herokucdn.com/deploy/button.svg)](https://heroku.com/deploy)
+
+Note: a simple way to generate the base64-encoded banner image is to upload it to a service like [https://base64.guru/converter/encode/file](https://base64.guru/converter/encode/file). Then copy the text into the BANNER field.

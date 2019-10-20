@@ -13,10 +13,12 @@ type Settings struct {
 	Port       string
 	Title      string
 	Banner     string
+	Background string
 	LabelPlus  string
 	LabelMinus string
-	Limit      int
-	Day        int
+
+	Limit int
+	Day   int
 }
 
 var settings *Settings
@@ -27,6 +29,8 @@ func Read() *Settings {
 	if banner != "/static/images/grass.jpg" {
 		banner = "data:image/png;base64," + banner
 	}
+
+	background := getEnvVar("BACKGROUND", "#000000")
 
 	l := getEnvVar("LIMIT", string(defaultLimit))
 	limit, err := strconv.Atoi(l)
@@ -44,6 +48,7 @@ func Read() *Settings {
 	settings = &Settings{
 		Port:       getEnvVar("PORT", "8000"),
 		Banner:     banner,
+		Background: background,
 		Title:      getEnvVar("TITLE", "Sign-up Sheet"),
 		LabelPlus:  getEnvVar("LABELPLUS", "Attending"),
 		LabelMinus: getEnvVar("LABELMINUS", "Not attending"),
